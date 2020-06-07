@@ -155,11 +155,6 @@ class Spider():
 
 
 if __name__ == '__main__':
-    username = "wangyejiaoben@aa.com"
-    password = "qq111111"
+    username = "111"
+    password = "123456"
     link = "https://www.spotify.com/us/family/join/invite/CbaABy24B7c1ZB6/"  # 这个链接满了
-
-    # driver = load_driver()
-    # driver = login(driver, username, password)
-    # driver = check_country(driver)
-    # driver = open_other_link(driver, link)

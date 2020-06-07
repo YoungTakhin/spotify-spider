@@ -2,9 +2,9 @@ from spider import spider
 
 
 if __name__ == '__main__':
-    username = "wangyejiaoben@aa.com"
-    password = "qq11111"
-    link = "https://www.spotify.com/us/family/join/invite/CbaABy24B7c1ZB6/"
+    username = "111"
+    password = "123456"
+    link = "https://www.spotify.com/us/family/join/invite/CbaABy24B7c1ZB6/"  # 这个链接满了
 
     code = int()
 

@@ -31,12 +31,6 @@ def spotify_spider():
     password = json.loads(request.data)['password']
     link = json.loads(request.data)['link']
 
-    # username = "wangyejiaoben@aa.com"
-    # password = "qq11111"
-    # link = "https://www.spotify.com/us/family/join/invite/CbaABy24B7c1ZB6/"
-
-    code = ""
-
     s = spider.Spider()
 
     code = s.get_website()
@@ -48,6 +42,7 @@ def spotify_spider():
                 code = s.open_other_link(link)
                 if code == "1":
                     code = s.close()
+    s.close()
     return code
 
 
