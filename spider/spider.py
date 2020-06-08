@@ -1,5 +1,6 @@
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 
 
@@ -113,20 +114,24 @@ class Spider():
         :param link: 家庭链接
         :return:
         """
-        self.driver.implicitly_wait(5)  # 隐式等待
         self.driver.get(link)
         self.driver.implicitly_wait(10)  # 隐式等待
 
         if self.is_element_present(By.XPATH, '//*[@id="plan-already-full-error-page"]/div/section/h1') or \
                 self.is_element_present(By.XPATH, '//*[@id="invitation-expired-error-page"]/div/section/h1'):
-            self.driver.close()
             print("链接满了")
             return "11"
         else:
-            self.driver.find_element(
-                By.XPATH,
-                '//*[@id="duo-home-root"]/main/div/div[1]/section/article/header/div/div[3]/div/button').click()
+            try:
+                self.driver.find_element(
+                    By.XPATH,
+                    '//*[@id="duo-home-root"]/main/div/div[1]/section/article/header/div/div[3]/div/button').click()
+            except Exception as e:
+                print("已经是会员了")
+                return "110"
 
+            self.driver.implicitly_wait(10)  # 隐式等待
+            self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/a[1]').click()
             self.driver.implicitly_wait(10)  # 隐式等待
             self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/a[1]').click()
             self.driver.implicitly_wait(10)  # 隐式等待
@@ -143,15 +148,9 @@ class Spider():
             return "1"
 
     def close(self):
-        try:
-            self.driver.delete_all_cookies()
-            self.driver.close()
-            self.driver.quit()
-            print("关闭成功了")
-            return "1"
-        except Exception as e:
-            print(e)
-            return "110"
+        self.driver.delete_all_cookies()
+        self.driver.quit()
+        print("关闭成功了")
 
 
 if __name__ == '__main__':

@@ -22,7 +22,7 @@ def spotify_spider():
         11: Link已满
         100: 账号或密码错误
         101: 国家更改失败
-        110: 驱动关闭错误
+        110: 已经是会员了
         111: 服务器无法访问网页
         1000: 链接用完了
     }
@@ -40,9 +40,7 @@ def spotify_spider():
             code = s.check_country()
             if code == "1":
                 code = s.open_other_link(link)
-                if code == "1":
-                    code = s.close()
-    s.close()
+    code = s.close()
     return code
 
 
