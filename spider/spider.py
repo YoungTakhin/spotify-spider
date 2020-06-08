@@ -130,19 +130,26 @@ class Spider():
                 print("已经是会员了")
                 return "110"
 
+            # You’re invited to Premium Family.
+            self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div[1]/section/article/header/div/div[3]/div/button/span').click()
             self.driver.implicitly_wait(10)  # 隐式等待
+
+            # Continue with this account?
             self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/a[1]').click()
             self.driver.implicitly_wait(10)  # 隐式等待
-            self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/a[1]').click()
-            self.driver.implicitly_wait(10)  # 隐式等待
+
+            # Let’s confirm your home address
             self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/button[2]').click()
             self.driver.implicitly_wait(10)  # 隐式等待
 
+            # Enter your home address
             self.driver.find_element(
                 By.XPATH, '//*[@id="address"]').send_keys("Calle 25 De Julio, Guanica, Guánica 00653, Puerto Rico")
-            self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/form/main/div/div/button').click()
+            self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/form/main/div/div/button/span').click()
             self.driver.implicitly_wait(5)  # 隐式等待
-            self.driver.find_element(By.XPATH, '//*[@id="confirm-address-dialog"]/footer/button[2]').click()
+
+            # Confirm address
+            self.driver.find_element(By.XPATH, '//*[@id="confirm-address-dialog"]/footer/button[2]/span').click()
             self.driver.implicitly_wait(10)  # 隐式等待
             print("充值成功了")
             return "1"
