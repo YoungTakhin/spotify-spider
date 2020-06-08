@@ -40,7 +40,7 @@ def spotify_spider():
             code = s.check_country()
             if code == "1":
                 code = s.open_other_link(link)
-    code = s.close()
+    s.close()
     return code
 
 

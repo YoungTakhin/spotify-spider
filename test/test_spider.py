@@ -2,9 +2,9 @@ from spider import spider
 
 
 if __name__ == '__main__':
-    username = "tpfztad@163.com"
+    username = "sysdqpc@163.com"
     password = "111222333"
-    link = "https://www.spotify.com/us/family/join/invite/3cYb0xYyA7x95b1/"  # 这个链接满了
+    link = "https://www.spotify.com/us/family/join/invite/AByx0A79zb8xx14/"  # 这个链接满了
 
     s = spider.Spider()
 

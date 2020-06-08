@@ -1,6 +1,7 @@
+import time
+
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
 
@@ -122,23 +123,26 @@ class Spider():
             print("链接满了")
             return "11"
         else:
-            try:
-                self.driver.find_element(
-                    By.XPATH,
-                    '//*[@id="duo-home-root"]/main/div/div[1]/section/article/header/div/div[3]/div/button').click()
-            except Exception as e:
-                print("已经是会员了")
-                return "110"
+            # try:
+            #     self.driver.find_element(
+            #         By.XPATH,
+            #         '//*[@id="duo-home-root"]/main/div/div[1]/section/article/header/div/div[3]/div/button').click()
+            # except Exception as e:
+            #     print("已经是会员了")
+            #     return "110"
 
             # You’re invited to Premium Family.
+            print('You’re invited to Premium Family.')
             self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div[1]/section/article/header/div/div[3]/div/button/span').click()
-            self.driver.implicitly_wait(10)  # 隐式等待
+            time.sleep(3)  # 这里有一个二次跳转，强制等待3秒
 
             # Continue with this account?
+            print('Continue with this account?')
             self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/a[1]').click()
             self.driver.implicitly_wait(10)  # 隐式等待
 
             # Let’s confirm your home address
+            print('Let’s confirm your home address')
             self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/button[2]').click()
             self.driver.implicitly_wait(10)  # 隐式等待
 
