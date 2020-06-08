@@ -85,7 +85,6 @@ class Spider():
         :param driver:
         :return:
         """
-        self.driver.implicitly_wait(5)  # 隐式等待
         country = self.driver.find_element(By.XPATH, '//p[@data-qa="Profile Field: Country"]')
 
         if country.text == "US":
@@ -93,10 +92,7 @@ class Spider():
             return "1"
         else:
             try:
-                self.driver.find_element(
-                    By.XPATH,
-                    '//*[@id="__next"]/div/div/div[2]/div[3]/div[2]/div/article[1]/div/a'
-                ).click()  # 点击编辑
+                self.driver.find_element(By.PARTIAL_LINK_TEXT, 'Edit profile').click()  # 点击编辑
                 self.driver.implicitly_wait(10)  # 隐式等待
                 self.driver.find_element(By.XPATH, '//*[@id="profile_country"]').click()  # 点击选择栏
                 self.driver.find_element(By.XPATH, '//*[@id="profile_country"]/option[@value="US"]').click()  # 选择美国
@@ -130,33 +126,34 @@ class Spider():
             # except Exception as e:
             #     print("已经是会员了")
             #     return "110"
+            try:
+                # You’re invited to Premium Family.
+                self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div[1]/section/article/header/div/div[3]/div/button/span').click()
+                time.sleep(2)  # 这里有一个二次跳转，强制等待3秒
 
-            # You’re invited to Premium Family.
-            print('You’re invited to Premium Family.')
-            self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div[1]/section/article/header/div/div[3]/div/button/span').click()
-            time.sleep(3)  # 这里有一个二次跳转，强制等待3秒
+                # Continue with this account?
+                self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/a[1]').click()
+                time.sleep(2)  # 这里有一个二次跳转，强制等待3秒
 
-            # Continue with this account?
-            print('Continue with this account?')
-            self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/a[1]').click()
-            self.driver.implicitly_wait(10)  # 隐式等待
+                # Let’s confirm your home address
+                self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/button[2]').click()
+                self.driver.implicitly_wait(10)  # 隐式等待
 
-            # Let’s confirm your home address
-            print('Let’s confirm your home address')
-            self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/main/div/div/button[2]').click()
-            self.driver.implicitly_wait(10)  # 隐式等待
+                # Enter your home address
+                self.driver.find_element(
+                    By.XPATH, '//*[@id="address"]').send_keys("Calle 25 De Julio, Guanica, Guánica 00653, Puerto Rico")
+                self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/form/main/div/div/button/span').click()
+                self.driver.implicitly_wait(5)  # 隐式等待
 
-            # Enter your home address
-            self.driver.find_element(
-                By.XPATH, '//*[@id="address"]').send_keys("Calle 25 De Julio, Guanica, Guánica 00653, Puerto Rico")
-            self.driver.find_element(By.XPATH, '//*[@id="duo-home-root"]/form/main/div/div/button/span').click()
-            self.driver.implicitly_wait(5)  # 隐式等待
-
-            # Confirm address
-            self.driver.find_element(By.XPATH, '//*[@id="confirm-address-dialog"]/footer/button[2]/span').click()
-            self.driver.implicitly_wait(10)  # 隐式等待
-            print("充值成功了")
-            return "1"
+                # Confirm address
+                self.driver.find_element(By.XPATH, '//*[@id="confirm-address-dialog"]/footer/button[2]/span').click()
+                self.driver.implicitly_wait(10)  # 隐式等待
+                print("充值成功了")
+                return "1"
+            except Exception as e:
+                print(e)
+                print("找不到对应按钮")
+                return "110"
 
     def close(self):
         self.driver.delete_all_cookies()
